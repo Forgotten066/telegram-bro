@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'sha256-96rrpwqgFQdCLusqSzJhoKTnXHpbY454uK/5nCqaBGk='">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0c0f">
+<title>Связь для братвы</title>
+<style>
+:root {
+  --bg: #0b0c0f; --card: #14161b; --card-2: #1b1e25; --line: #262a33;
+  --text: #f2f3f5; --muted: #8d94a1; --accent: #3d8bfd; --accent-press: #2f74db;
+  --ok: #3ecf8e; --warn: #e8b04b;
+  --radius: 18px;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 17px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
+main { max-width: 760px; margin: 0 auto;
+  padding: calc(28px + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+           calc(40px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+
+/* hero */
+.hero { padding: 12px 4px 26px; }
+.hero h1 { margin: 0; font-size: clamp(30px, 8.5vw, 46px); line-height: 1.05; font-weight: 800; letter-spacing: 0.02em; }
+.hero .lead { margin: 10px 0 0; font-size: 19px; color: var(--text); opacity: 0.86; }
+.hero .from { display: inline-block; margin-top: 14px; padding: 5px 12px; border: 1px solid var(--line);
+  border-radius: 999px; color: var(--muted); font-size: 14px; }
+.stats { margin: 18px 0 0; color: var(--muted); font-size: 15px; }
+.stats b { color: var(--ok); font-weight: 600; }
+
+.note { margin: 0 0 18px; padding: 14px 16px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; color: var(--muted); font-size: 15px; }
+
+/* cards */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px; margin: 0 0 14px; }
+.card-head { display: flex; align-items: flex-start; gap: 14px; }
+.rank { flex: none; width: 38px; height: 38px; border-radius: 12px; background: var(--card-2);
+  border: 1px solid var(--line); display: grid; place-items: center; font-weight: 700; font-size: 17px; }
+.card:first-of-type .rank { background: var(--accent); border-color: var(--accent); color: #fff; }
+.title { flex: 1; min-width: 0; }
+.title h2 { margin: 0; font-size: 18px; line-height: 1.3; font-weight: 650; overflow-wrap: anywhere; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 0; }
+.chips span { font-size: 13px; color: var(--muted); background: var(--card-2); border-radius: 8px; padding: 2px 8px; }
+.chips .ping { color: var(--ok); }
+.chips .best { color: #fff; background: var(--accent); font-weight: 600; }
+.weak { margin: 12px 0 0; font-size: 14px; color: var(--warn); }
+
+.card-body { display: flex; gap: 18px; margin-top: 16px; align-items: flex-start; }
+.actions { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn { display: flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 14px;
+  border-radius: 14px; border: 1px solid var(--line); background: var(--card-2); color: var(--text);
+  font: inherit; font-size: 16px; font-weight: 550; text-decoration: none; cursor: pointer; text-align: center;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s; }
+.btn:hover { border-color: #3a404b; }
+.btn:active { transform: scale(0.98); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn.primary { min-height: 56px; background: var(--accent); border-color: var(--accent); color: #fff; font-size: 18px; font-weight: 650; }
+.btn.primary:hover { background: var(--accent-press); border-color: var(--accent-press); }
+.btn.done { color: var(--ok); border-color: rgba(62, 207, 142, 0.45); }
+
+details { margin-top: 2px; }
+details summary { cursor: pointer; color: var(--muted); font-size: 15px; padding: 6px 2px; list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+details summary::before { content: "+ "; color: var(--accent); }
+details[open] summary::before { content: "− "; }
+dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 12px; margin: 6px 0 0; font-size: 14px; }
+dt { color: var(--muted); }
+dd { margin: 0; min-width: 0; }
+code { font: 13px/1.4 ui-monospace, "SF Mono", Consolas, monospace; background: var(--card-2);
+  padding: 2px 6px; border-radius: 6px; overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; }
+
+.qr { flex: none; margin: 0; text-align: center; }
+.qr svg { display: block; width: 176px; height: 176px; border-radius: 12px; shape-rendering: crispEdges; }
+.qr figcaption { color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+/* how-to */
+.howto { margin-top: 30px; padding: 22px 18px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+.howto h2 { margin: 0 0 14px; font-size: 21px; font-weight: 700; }
+.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; }
+.steps li { counter-increment: s; position: relative; padding: 0 0 14px 40px; }
+.steps li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 26px; height: 26px;
+  border-radius: 8px; background: var(--card-2); border: 1px solid var(--line); display: grid; place-items: center;
+  font-size: 14px; font-weight: 700; color: var(--accent); }
+.steps b { font-weight: 650; }
+.small { color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+
+footer { margin: 34px 0 0; text-align: center; color: var(--muted); }
+footer .quote { font-size: 17px; color: var(--text); opacity: 0.9; margin: 0; }
+footer .sign { margin: 6px 0 0; font-size: 15px; }
+
+@media (max-width: 560px) {
+  .card-body { flex-direction: column; align-items: stretch; }
+  .qr { align-self: center; }
+  .qr svg { width: 200px; height: 200px; }
+}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>СВЯЗЬ ДЛЯ БРАТВЫ</h1>
+    <p class="lead">Чтобы свои всегда были на связи.</p>
+    <span class="from">От Шаха 🤝</span>
+    <p class="stats">Проверено 1135 серверов, реально пускают в телегу — 896. Ниже пять лучших. Обновлено 2026-10-24 22:57.</p>
+  </section>
+
+  <p class="note">Проверял с компа, где телега и так открывается. До серверов Telegram всё доходит, но как оно поведёт себя в России — покажет только айфон. Не пошёл один — бери следующий.</p>
+  
+  
+<article class="card">
+  <header class="card-head">
+    <span class="rank">1</span>
+    <div class="title">
+      <h2>t6.nevcodeframe.com</h2>
+      <p class="chips"><span class="best">лучший</span><span class="ping">202 мс</span><span>стабильно 100%</span><span>серверов 5/5</span><span>Fake-TLS</span></p>
+    </div>
+  </header>
+  
+  <div class="card-body">
+    <div class="actions">
+      <a class="btn primary" href="tg://proxy?server=t6.nevcodeframe.com&amp;port=443&amp;secret=ee0e4d933242164450da8a7e6b469b629774362e6e6576636f64656672616d652e636f6d">Подключить</a>
+      <div class="row">
+        <button class="btn" type="button" data-copy="https://t.me/proxy?server=t6.nevcodeframe.com&amp;port=443&amp;secret=ee0e4d933242164450da8a7e6b469b629774362e6e6576636f64656672616d652e636f6d">Скопировать</button>
+        <a class="btn" href="https://t.me/proxy?server=t6.nevcodeframe.com&amp;port=443&amp;secret=ee0e4d933242164450da8a7e6b469b629774362e6e6576636f64656672616d652e636f6d" target="_blank" rel="noopener">Через t.me</a>
+      </div>
+      <details><summary>Ввести вручную</summary>
+        <dl><dt>Сервер</dt><dd><code>t6.nevcodeframe.com</code></dd><dt>Порт</dt><dd><code>443</code></dd>
+        <dt>Секрет</dt><dd><code>ee0e4d933242164450da8a7e6b469b629774362e6e6576636f64656672616d652e636f6d</code></dd></dl>
+      </details>
+    </div>
+    <figure class="qr"><svg viewBox="0 0 57 57" class="segno"><path fill="#fff" d="M0 0h57v57h-57z"/><path class="qrline" stroke="#000" d="M4 4.5h7m5 0h2m1 0h2m8 0h5m2 0h2m1 0h1m1 0h1m2 0h1m1 0h7m-49 1h1m5 0h1m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h4m3 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m5 0h1m-49 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h2m2 0h2m1 0h2m1 0h3m1 0h1m4 0h2m1 0h1m1 0h3m1 0h1m-49 1h1m1 0h3m1 0h1m1 0h2m3 0h2m1 0h1m1 0h1m3 0h2m2 0h1m7 0h4m1 0h1m2 0h1m1 0h3m1 0h1m-49 1h1m1 0h3m1 0h1m1 0h2m5 0h1m1 0h16m2 0h3m4 0h1m1 0h3m1 0h1m-49 1h1m5 0h1m1 0h1m2 0h1m3 0h1m4 0h3m3 0h1m2 0h1m1 0h1m2 0h1m3 0h1m3 0h1m5 0h1m-49 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-41 1h7m2 0h1m1 0h2m1 0h1m3 0h5m1 0h2m1 0h1m1 0h2m1 0h1m-41 1h1m1 0h5m3 0h1m4 0h1m1 0h4m1 0h5m2 0h3m2 0h1m1 0h3m1 0h1m1 0h5m-47 1h4m4 0h3m2 0h2m1 0h3m8 0h1m1 0h2m1 0h2m2 0h2m1 0h1m2 0h1m1 0h1m-45 1h2m3 0h7m3 0h1m4 0h4m2 0h2m1 0h1m3 0h7m1 0h1m3 0h1m1 0h2m-47 1h2m4 0h3m1 0h2m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h6m3 0h1m6 0h2m1 0h2m-48 1h3m2 0h1m1 0h3m3 0h1m1 0h1m2 0h1m2 0h1m1 0h2m1 0h1m2 0h2m1 0h5m1 0h2m2 0h1m2 0h1m1 0h1m-49 1h1m2 0h3m1 0h2m1 0h1m2 0h1m1 0h2m4 0h1m1 0h1m3 0h1m2 0h2m1 0h1m8 0h1m4 0h1m-47 1h4m1 0h1m1 0h2m3 0h1m5 0h1m3 0h4m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1m2 0h1m3 0h2m-49 1h4m7 0h1m1 0h1m1 0h4m2 0h1m1 0h1m1 0h1m4 0h1m4 0h1m1 0h1m3 0h1m2 0h2m2 0h1m-47 1h1m2 0h2m1 0h1m3 0h1m4 0h1m1 0h2m3 0h2m1 0h1m1 0h2m2 0h2m1 0h1m1 0h4m1 0h1m2 0h1m-44 1h2m4 0h2m1 0h3m1 0h1m1 0h1m2 0h1m1 0h2m5 0h1m10 0h4m2 0h1m-46 1h2m1 0h3m2 0h1m6 0h2m1 0h1m1 0h1m2 0h3m1 0h2m2 0h7m5 0h1m2 0h1m-44 1h1m2 0h1m3 0h4m2 0h2m3 0h1m4 0h8m1 0h3m2 0h3m-45 1h1m1 0h2m2 0h4m1 0h2m1 0h1m2 0h9m1 0h1m5 0h1m2 0h2m1 0h4m3 0h3m-47 1h2m4 0h2m1 0h6m4 0h1m1 0h2m4 0h4m4 0h1m1 0h1m2 0h3m1 0h2m-48 1h3m1 0h5m1 0h3m1 0h1m1 0h2m2 0h1m1 0h5m4 0h1m2 0h3m1 0h7m3 0h1m-47 1h1m1 0h1m3 0h2m1 0h3m2 0h1m5 0h1m3 0h1m1 0h5m2 0h1m3 0h2m3 0h1m-43 1h3m1 0h1m1 0h2m3 0h2m3 0h1m1 0h3m1 0h1m1 0h2m2 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h5m-49 1h1m1 0h3m3 0h1m1 0h3m1 0h2m1 0h3m1 0h2m3 0h1m3 0h3m3 0h2m1 0h2m3 0h1m-41 1h7m1 0h1m1 0h3m1 0h2m2 0h5m2 0h1m4 0h12m1 0h2m-48 1h1m7 0h3m1 0h1m4 0h2m1 0h5m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h2m3 0h1m-45 1h2m1 0h9m5 0h1m3 0h5m2 0h1m1 0h1m1 0h4m1 0h2m1 0h4m1 0h1m1 0h1m-49 1h1m2 0h1m1 0h1m1 0h1m1 0h2m2 0h4m2 0h3m2 0h1m1 0h1m3 0h4m2 0h2m2 0h1m-41 1h2m3 0h6m1 0h2m1 0h2m1 0h1m1 0h1m2 0h3m2 0h2m4 0h1m1 0h1m1 0h3m1 0h7m-49 1h1m1 0h1m2 0h1m1 0h3m1 0h3m1 0h6m1 0h1m1 0h1m1 0h2m1 0h1m5 0h1m1 0h1m3 0h1m1 0h1m1 0h1m-46 1h4m1 0h2m2 0h1m2 0h4m1 0h1m2 0h1m1 0h2m1 0h1m2 0h1m4 0h2m1 0h2m1 0h3m2 0h1m1 0h3m-49 1h1m2 0h2m4 0h1m3 0h2m2 0h1m1 0h1m4 0h1m2 0h3m3 0h1m1 0h2m2 0h1m1 0h1m1 0h1m3 0h1m-48 1h1m3 0h3m1 0h1m2 0h3m1 0h2m1 0h1m1 0h6m2 0h1m1 0h2m2 0h7m1 0h1m2 0h1m2 0h1m-49 1h1m2 0h3m2 0h1m1 0h2m1 0h3m1 0h1m1 0h1m3 0h2m1 0h10m1 0h1m2 0h1m7 0h1m-48 1h1m2 0h1m1 0h5m1 0h1m6 0h2m1 0h2m1 0h1m3 0h2m5 0h2m1 0h1m1 0h1m2 0h1m1 0h3m-44 1h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h2m2 0h2m1 0h1m1 0h6m1 0h1m2 0h1m3 0h4m3 0h1m-47 1h1m3 0h2m2 0h3m1 0h2m2 0h1m4 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h3m1 0h1m1 0h1m3 0h1m-48 1h3m3 0h3m1 0h2m6 0h1m1 0h1m1 0h7m2 0h2m1 0h1m1 0h1m2 0h1m2 0h3m1 0h2m-49 1h3m3 0h7m2 0h2m3 0h7m2 0h3m2 0h1m1 0h1m2 0h8m1 0h1m-41 1h1m2 0h2m2 0h1m2 0h2m2 0h1m3 0h1m2 0h3m3 0h2m3 0h1m3 0h1m2 0h1m-48 1h7m2 0h1m5 0h1m2 0h1m2 0h2m1 0h1m1 0h1m4 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h1m2 0h2m-49 1h1m5 0h1m1 0h1m1 0h1m1 0h2m5 0h1m1 0h2m3 0h1m1 0h6m1 0h1m4 0h1m3 0h2m-46 1h1m1 0h3m1 0h1m1 0h2m1 0h2m6 0h1m1 0h7m3 0h1m1 0h4m1 0h1m1 0h5m1 0h3m-49 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m2 0h4m1 0h4m1 0h1m4 0h1m2 0h2m3 0h1m-49 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h2m3 0h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h2m1 0h3m2 0h2m1 0h2m-47 1h1m5 0h1m2 0h1m8 0h1m3 0h1m2 0h2m3 0h1m1 0h1m8 0h2m2 0h1m2 0h1m-49 1h7m1 0h1m2 0h2m2 0h1m1 0h5m1 0h1m3 0h1m1 0h3m1 0h4m1 0h2m6 0h3"/></svg><figcaption>Наведи камеру айфона</figcaption></figure>
+  </div>
+</article>
+
+<article class="card">
+  <header class="card-head">
+    <span class="rank">2</span>
+    <div class="title">
+      <h2>t5.nevcodeframe.com</h2>
+      <p class="chips"><span class="ping">203 мс</span><span>стабильно 100%</span><span>серверов 5/5</span><span>Fake-TLS</span></p>
+    </div>
+  </header>
+  
+  <div class="card-body">
+    <div class="actions">
+      <a class="btn primary" href="tg://proxy?server=t5.nevcodeframe.com&amp;port=443&amp;secret=ee4e7e658f96af22ada977fa3e2e472e6274352e6e6576636f64656672616d652e636f6d">Подключить</a>
+      <div class="row">
+        <button class="btn" type="button" data-copy="https://t.me/proxy?server=t5.nevcodeframe.com&amp;port=443&amp;secret=ee4e7e658f96af22ada977fa3e2e472e6274352e6e6576636f64656672616d652e636f6d">Скопировать</button>
+        <a class="btn" href="https://t.me/proxy?server=t5.nevcodeframe.com&amp;port=443&amp;secret=ee4e7e658f96af22ada977fa3e2e472e6274352e6e6576636f64656672616d652e636f6d" target="_blank" rel="noopener">Через t.me</a>
+      </div>
+      <details><summary>Ввести вручную</summary>
+        <dl><dt>Сервер</dt><dd><code>t5.nevcodeframe.com</code></dd><dt>Порт</dt><dd><code>443</code></dd>
+        <dt>Секрет</dt><dd><code>ee4e7e658f96af22ada977fa3e2e472e6274352e6e6576636f64656672616d652e636f6d</code></dd></dl>
+      </details>
+    </div>
+    <figure class="qr"><svg viewBox="0 0 57 57" class="segno"><path fill="#fff" d="M0 0h57v57h-57z"/><path class="qrline" stroke="#000" d="M4 4.5h7m2 0h2m1 0h1m3 0h4m5 0h5m2 0h2m1 0h1m1 0h1m2 0h1m1 0h7m-49 1h1m5 0h1m5 0h1m2 0h1m1 0h2m1 0h5m3 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m5 0h1m-49 1h1m1 0h3m1 0h1m1 0h1m3 0h2m5 0h2m3 0h2m1 0h2m1 0h3m1 0h2m3 0h2m1 0h1m1 0h3m1 0h1m-49 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m5 0h1m1 0h1m8 0h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1m-49 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m1 0h14m3 0h2m4 0h1m1 0h3m1 0h1m-49 1h1m5 0h1m1 0h4m1 0h3m1 0h2m1 0h3m3 0h1m2 0h1m1 0h1m2 0h3m1 0h1m3 0h1m5 0h1m-49 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-41 1h2m1 0h2m1 0h1m3 0h3m1 0h1m3 0h5m1 0h2m1 0h1m1 0h2m1 0h1m-41 1h1m1 0h5m2 0h4m2 0h1m1 0h1m1 0h2m1 0h5m2 0h3m2 0h1m1 0h3m1 0h1m1 0h5m-45 1h1m5 0h1m1 0h2m2 0h1m1 0h1m1 0h1m8 0h1m1 0h2m1 0h2m2 0h2m1 0h1m2 0h1m1 0h2m-46 1h3m2 0h6m1 0h1m2 0h1m4 0h4m2 0h1m2 0h1m3 0h7m1 0h1m3 0h4m-49 1h2m6 0h3m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m2 0h5m10 0h3m1 0h2m-48 1h3m2 0h6m2 0h2m3 0h1m2 0h1m1 0h2m1 0h1m2 0h2m2 0h4m1 0h2m5 0h1m1 0h1m-49 1h1m2 0h1m3 0h1m2 0h2m1 0h1m2 0h1m4 0h1m1 0h1m3 0h1m2 0h2m1 0h1m8 0h2m3 0h1m-48 1h4m2 0h3m1 0h1m1 0h1m3 0h1m1 0h2m3 0h4m2 0h1m1 0h1m2 0h1m1 0h5m6 0h2m-49 1h6m4 0h2m3 0h4m2 0h1m1 0h1m1 0h1m4 0h1m4 0h1m1 0h1m3 0h1m2 0h2m2 0h1m-49 1h1m2 0h1m1 0h3m3 0h1m2 0h3m2 0h2m3 0h2m1 0h1m1 0h2m2 0h2m1 0h1m1 0h4m1 0h1m2 0h1m-46 1h1m1 0h3m2 0h1m1 0h2m4 0h3m2 0h1m8 0h1m10 0h4m2 0h1m-45 1h4m1 0h2m1 0h2m2 0h2m3 0h1m1 0h6m1 0h2m2 0h7m5 0h1m2 0h1m-42 1h6m2 0h1m2 0h2m3 0h1m4 0h8m1 0h3m3 0h2m-45 1h1m2 0h5m3 0h2m4 0h2m1 0h6m1 0h1m5 0h1m2 0h2m1 0h4m3 0h3m-46 1h2m2 0h1m1 0h1m1 0h6m2 0h1m1 0h4m4 0h2m1 0h1m2 0h3m1 0h1m2 0h3m1 0h2m-46 1h7m1 0h3m1 0h1m1 0h3m1 0h7m7 0h3m1 0h7m3 0h1m-47 1h1m1 0h1m3 0h2m1 0h4m1 0h2m1 0h1m1 0h2m3 0h1m1 0h5m2 0h1m3 0h2m3 0h1m-44 1h2m1 0h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h2m2 0h3m1 0h1m1 0h2m2 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h5m-49 1h2m2 0h1m3 0h2m1 0h2m2 0h1m1 0h3m2 0h1m3 0h1m3 0h3m3 0h2m1 0h2m3 0h2m-46 1h3m1 0h7m1 0h1m1 0h2m2 0h2m2 0h5m2 0h1m4 0h15m-46 1h3m1 0h4m2 0h1m2 0h1m1 0h2m1 0h1m1 0h3m2 0h1m1 0h1m1 0h2m1 0h1m4 0h2m-40 1h1m1 0h8m6 0h1m3 0h5m2 0h1m1 0h1m1 0h7m1 0h6m1 0h1m-49 1h2m1 0h1m1 0h1m1 0h1m1 0h6m4 0h3m2 0h1m1 0h1m3 0h3m3 0h2m2 0h1m-40 1h1m3 0h4m2 0h3m1 0h1m4 0h1m2 0h3m2 0h2m3 0h2m1 0h1m1 0h2m2 0h7m-49 1h3m2 0h1m1 0h3m1 0h1m2 0h2m2 0h3m1 0h1m1 0h1m1 0h2m1 0h1m5 0h1m1 0h1m2 0h2m1 0h1m1 0h1m-45 1h3m1 0h2m6 0h1m3 0h1m2 0h1m1 0h2m1 0h1m2 0h1m4 0h2m1 0h2m1 0h3m2 0h1m1 0h3m-49 1h4m3 0h1m2 0h2m1 0h2m1 0h4m4 0h6m3 0h1m1 0h2m3 0h2m1 0h1m3 0h1m-48 1h1m2 0h1m2 0h1m2 0h6m3 0h1m1 0h6m2 0h1m1 0h2m2 0h7m1 0h1m2 0h1m2 0h1m-49 1h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h2m1 0h9m2 0h1m2 0h1m2 0h1m4 0h1m-48 1h4m1 0h1m3 0h1m1 0h3m3 0h3m1 0h2m1 0h1m3 0h2m4 0h3m1 0h1m1 0h1m2 0h1m1 0h3m-46 1h3m1 0h1m1 0h2m1 0h2m1 0h1m2 0h1m2 0h2m1 0h1m1 0h5m1 0h2m6 0h4m-43 1h1m3 0h2m4 0h1m5 0h1m1 0h1m2 0h3m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h1m2 0h2m-48 1h3m3 0h6m4 0h2m1 0h2m1 0h7m2 0h2m1 0h1m1 0h1m2 0h1m2 0h3m1 0h2m-49 1h3m3 0h1m1 0h1m5 0h1m2 0h1m2 0h1m1 0h5m2 0h3m2 0h1m1 0h1m2 0h8m1 0h1m-41 1h1m1 0h1m2 0h1m1 0h2m1 0h2m2 0h1m3 0h1m2 0h3m3 0h2m3 0h1m3 0h2m1 0h1m-48 1h7m2 0h1m2 0h1m3 0h1m1 0h1m2 0h2m1 0h1m1 0h1m4 0h1m1 0h3m1 0h2m1 0h1m1 0h1m1 0h1m2 0h2m-49 1h1m5 0h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h2m3 0h1m1 0h5m2 0h1m1 0h1m2 0h1m3 0h1m-45 1h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h2m2 0h1m1 0h7m1 0h3m3 0h3m2 0h9m-49 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m4 0h1m3 0h1m2 0h4m1 0h4m1 0h1m4 0h5m3 0h1m-49 1h1m1 0h3m1 0h1m1 0h2m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h2m1 0h3m1 0h1m1 0h1m1 0h2m-47 1h1m5 0h1m3 0h1m2 0h1m1 0h1m1 0h2m3 0h1m2 0h2m3 0h1m1 0h1m9 0h1m2 0h1m2 0h1m-49 1h7m1 0h1m1 0h3m1 0h2m2 0h4m1 0h1m3 0h1m1 0h3m1 0h4m1 0h2m1 0h1m4 0h3"/></svg><figcaption>Наведи камеру айфона</figcaption></figure>
+  </div>
+</article>
+
+<article class="card">
+  <header class="card-head">
+    <span class="rank">3</span>
+    <div class="title">
+      <h2>my.silvpn.su</h2>
+      <p class="chips"><span class="ping">207 мс</span><span>стабильно 100%</span><span>серверов 5/5</span><span>Fake-TLS</span></p>
+    </div>
+  </header>
+  
+  <div class="card-body">
+    <div class="actions">
+      <a class="btn primary" href="tg://proxy?server=my.silvpn.su&amp;port=443&amp;secret=eeea7a1978e167c0842ce31a16749038da6d792e6e657763646e2e7275">Подключить</a>
+      <div class="row">
+        <button class="btn" type="button" data-copy="https://t.me/proxy?server=my.silvpn.su&amp;port=443&amp;secret=eeea7a1978e167c0842ce31a16749038da6d792e6e657763646e2e7275">Скопировать</button>
+        <a class="btn" href="https://t.me/proxy?server=my.silvpn.su&amp;port=443&amp;secret=eeea7a1978e167c0842ce31a16749038da6d792e6e657763646e2e7275" target="_blank" rel="noopener">Через t.me</a>
+      </div>
+      <details><summary>Ввести вручную</summary>
+        <dl><dt>Сервер</dt><dd><code>my.silvpn.su</code></dd><dt>Порт</dt><dd><code>443</code></dd>
+        <dt>Секрет</dt><dd><code>eeea7a1978e167c0842ce31a16749038da6d792e6e657763646e2e7275</code></dd></dl>
+      </details>
+    </div>
+    <figure class="qr"><svg viewBox="0 0 53 53" class="segno"><path fill="#fff" d="M0 0h53v53h-53z"/><path class="qrline" stroke="#000" d="M4 4.5h7m5 0h1m1 0h1m2 0h1m4 0h2m3 0h4m5 0h1m1 0h7m-45 1h1m5 0h1m4 0h5m1 0h3m3 0h4m2 0h1m5 0h1m2 0h1m5 0h1m-45 1h1m1 0h3m1 0h1m1 0h8m7 0h3m1 0h4m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1m-45 1h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h4m1 0h7m3 0h2m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-45 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h4m4 0h5m5 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m-45 1h1m5 0h1m1 0h2m1 0h1m1 0h1m3 0h1m2 0h1m3 0h3m2 0h1m1 0h1m6 0h1m5 0h1m-45 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-37 1h2m3 0h2m4 0h2m3 0h1m3 0h3m1 0h1m2 0h2m-37 1h1m1 0h5m3 0h1m1 0h1m1 0h2m1 0h1m2 0h7m2 0h3m1 0h1m1 0h1m2 0h5m-43 1h2m1 0h3m1 0h1m3 0h5m2 0h1m1 0h2m1 0h3m2 0h1m1 0h4m2 0h1m3 0h2m1 0h2m-45 1h2m3 0h4m1 0h1m1 0h3m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m3 0h3m1 0h3m2 0h2m-44 1h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m7 0h1m1 0h2m3 0h6m2 0h3m1 0h3m-43 1h2m4 0h3m1 0h1m6 0h3m2 0h1m1 0h4m1 0h2m2 0h1m1 0h1m2 0h2m1 0h1m2 0h1m-42 1h2m3 0h2m3 0h3m1 0h1m4 0h2m1 0h1m1 0h2m1 0h2m3 0h3m5 0h2m-45 1h2m3 0h3m3 0h1m1 0h3m1 0h6m1 0h4m1 0h1m1 0h4m2 0h2m2 0h2m-43 1h1m1 0h1m4 0h2m1 0h2m5 0h1m4 0h1m1 0h2m2 0h1m1 0h4m1 0h2m3 0h1m1 0h2m-43 1h3m2 0h2m1 0h4m4 0h3m1 0h1m2 0h4m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-45 1h2m1 0h1m1 0h1m3 0h2m10 0h1m1 0h1m5 0h5m1 0h2m5 0h3m-45 1h1m3 0h1m1 0h2m2 0h3m3 0h3m1 0h3m1 0h4m3 0h2m1 0h2m1 0h2m-35 1h2m2 0h1m1 0h1m4 0h2m1 0h2m1 0h1m2 0h2m1 0h6m2 0h1m1 0h1m1 0h5m-44 1h1m2 0h12m1 0h1m1 0h8m4 0h1m2 0h8m-39 1h1m1 0h1m3 0h1m1 0h2m1 0h2m1 0h2m2 0h1m3 0h1m3 0h1m1 0h1m2 0h1m1 0h2m3 0h3m1 0h1m-44 1h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2m-44 1h1m1 0h1m1 0h1m3 0h2m1 0h1m1 0h2m1 0h3m1 0h1m3 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h4m-44 1h1m3 0h5m1 0h2m6 0h8m1 0h1m1 0h1m1 0h1m1 0h9m2 0h1m-41 1h1m11 0h5m1 0h4m4 0h1m1 0h1m2 0h1m2 0h2m1 0h2m1 0h1m-43 1h3m1 0h4m1 0h2m7 0h1m4 0h5m3 0h2m1 0h1m2 0h2m2 0h1m-44 1h1m1 0h2m4 0h1m1 0h2m2 0h2m4 0h1m2 0h2m3 0h1m1 0h3m1 0h2m1 0h2m1 0h4m-43 1h1m2 0h4m3 0h4m1 0h4m6 0h2m6 0h1m3 0h1m1 0h2m-41 1h2m2 0h1m2 0h1m2 0h3m4 0h1m1 0h6m2 0h3m4 0h1m2 0h1m2 0h4m-45 1h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h6m1 0h1m1 0h2m1 0h1m1 0h1m4 0h1m2 0h1m1 0h1m2 0h1m1 0h1m-42 1h1m3 0h2m2 0h1m1 0h3m2 0h1m1 0h1m1 0h3m1 0h1m1 0h1m2 0h2m2 0h5m1 0h2m2 0h3m-44 1h1m2 0h1m1 0h4m1 0h1m1 0h3m2 0h2m7 0h1m1 0h1m3 0h1m5 0h3m1 0h1m-41 1h3m2 0h1m1 0h3m1 0h1m2 0h1m1 0h5m5 0h3m1 0h1m3 0h2m2 0h4m-41 1h1m1 0h1m2 0h1m2 0h2m1 0h3m3 0h1m1 0h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h2m1 0h4m-42 1h4m8 0h1m2 0h1m3 0h1m3 0h1m3 0h1m1 0h4m1 0h4m3 0h2m-44 1h1m2 0h2m1 0h1m2 0h7m1 0h1m2 0h5m4 0h1m4 0h1m1 0h6m-34 1h2m1 0h1m2 0h2m2 0h1m1 0h1m3 0h1m2 0h2m1 0h1m1 0h2m1 0h2m3 0h3m1 0h1m-45 1h7m3 0h1m2 0h1m1 0h1m3 0h2m1 0h1m1 0h1m6 0h1m2 0h3m1 0h1m1 0h1m1 0h2m-44 1h1m5 0h1m1 0h1m1 0h2m1 0h2m1 0h5m3 0h1m3 0h1m1 0h3m1 0h3m3 0h5m-45 1h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m4 0h1m1 0h5m1 0h1m2 0h2m4 0h7m-42 1h1m1 0h3m1 0h1m1 0h2m1 0h4m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h2m4 0h1m1 0h1m1 0h2m1 0h3m-45 1h1m1 0h3m1 0h1m1 0h1m2 0h3m2 0h2m1 0h1m5 0h4m2 0h1m1 0h2m1 0h1m1 0h1m3 0h2m-44 1h1m5 0h1m2 0h3m2 0h1m2 0h1m2 0h1m1 0h2m1 0h1m2 0h6m1 0h2m2 0h1m1 0h2m-43 1h7m1 0h2m1 0h2m6 0h1m3 0h3m1 0h1m1 0h3m1 0h8m2 0h1"/></svg><figcaption>Наведи камеру айфона</figcaption></figure>
+  </div>
+</article>
+
+<article class="card">
+  <header class="card-head">
+    <span class="rank">4</span>
+    <div class="title">
+      <h2>190.2.144.63</h2>
+      <p class="chips"><span class="ping">204 мс</span><span>стабильно 100%</span><span>серверов 5/5</span><span>Fake-TLS</span></p>
+    </div>
+  </header>
+  
+  <div class="card-body">
+    <div class="actions">
+      <a class="btn primary" href="tg://proxy?server=190.2.144.63&amp;port=443&amp;secret=eea3c15217ac9f487f3a9c2a1cab661ebb7777772e676f6f676c652e636f6d">Подключить</a>
+      <div class="row">
+        <button class="btn" type="button" data-copy="https://t.me/proxy?server=190.2.144.63&amp;port=443&amp;secret=eea3c15217ac9f487f3a9c2a1cab661ebb7777772e676f6f676c652e636f6d">Скопировать</button>
+        <a class="btn" href="https://t.me/proxy?server=190.2.144.63&amp;port=443&amp;secret=eea3c15217ac9f487f3a9c2a1cab661ebb7777772e676f6f676c652e636f6d" target="_blank" rel="noopener">Через t.me</a>
+      </div>
+      <details><summary>Ввести вручную</summary>
+        <dl><dt>Сервер</dt><dd><code>190.2.144.63</code></dd><dt>Порт</dt><dd><code>443</code></dd>
+        <dt>Секрет</dt><dd><code>eea3c15217ac9f487f3a9c2a1cab661ebb7777772e676f6f676c652e636f6d</code></dd></dl>
+      </details>
+    </div>
+    <figure class="qr"><svg viewBox="0 0 53 53" class="segno"><path fill="#fff" d="M0 0h53v53h-53z"/><path class="qrline" stroke="#000" d="M4 4.5h7m2 0h1m1 0h1m1 0h2m1 0h1m2 0h1m2 0h2m1 0h1m2 0h3m5 0h1m1 0h7m-45 1h1m5 0h1m2 0h1m1 0h4m1 0h5m2 0h2m1 0h2m1 0h1m3 0h1m1 0h1m2 0h1m5 0h1m-45 1h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m2 0h1m5 0h3m1 0h4m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1m-45 1h1m1 0h3m1 0h1m1 0h2m1 0h3m4 0h7m1 0h1m3 0h2m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-45 1h1m1 0h3m1 0h1m1 0h2m2 0h4m1 0h1m2 0h5m5 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m-45 1h1m5 0h1m1 0h5m2 0h1m1 0h1m2 0h1m3 0h3m2 0h1m1 0h1m6 0h1m5 0h1m-45 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-37 1h4m1 0h1m1 0h1m3 0h2m3 0h1m3 0h1m2 0h2m2 0h2m-37 1h1m1 0h5m2 0h2m5 0h2m2 0h7m2 0h2m2 0h1m1 0h1m2 0h5m-43 1h4m1 0h1m2 0h1m1 0h3m1 0h1m3 0h1m1 0h2m3 0h1m2 0h4m1 0h1m2 0h1m3 0h2m1 0h2m-45 1h4m1 0h2m8 0h1m2 0h2m3 0h2m1 0h1m1 0h1m4 0h2m1 0h4m3 0h1m-44 1h3m5 0h1m1 0h2m1 0h2m1 0h1m1 0h1m9 0h1m1 0h4m1 0h4m1 0h1m1 0h1m-42 1h1m4 0h3m3 0h2m1 0h2m1 0h2m1 0h7m1 0h1m3 0h1m1 0h1m2 0h2m1 0h1m2 0h1m-41 1h1m7 0h2m1 0h2m6 0h1m1 0h1m4 0h2m3 0h2m5 0h3m-44 1h4m1 0h1m6 0h3m2 0h4m2 0h3m2 0h1m1 0h4m2 0h2m-39 1h1m2 0h2m2 0h2m2 0h7m3 0h1m5 0h2m1 0h7m2 0h2m1 0h3m-41 1h1m1 0h1m6 0h1m4 0h1m1 0h2m1 0h3m5 0h1m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m-43 1h1m2 0h2m1 0h2m4 0h1m2 0h2m3 0h1m1 0h1m1 0h1m3 0h5m1 0h2m4 0h4m-45 1h1m1 0h1m1 0h3m4 0h2m2 0h1m1 0h6m1 0h1m1 0h2m3 0h2m1 0h2m1 0h3m1 0h1m-40 1h1m1 0h1m4 0h1m1 0h2m4 0h1m3 0h1m2 0h1m2 0h6m2 0h1m1 0h1m1 0h2m1 0h2m-43 1h8m1 0h1m1 0h1m1 0h3m1 0h9m3 0h1m2 0h2m1 0h6m1 0h1m-43 1h4m3 0h2m1 0h1m1 0h2m2 0h1m2 0h1m3 0h1m3 0h1m1 0h3m2 0h2m3 0h3m1 0h1m-43 1h3m1 0h1m1 0h2m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h1m-42 1h4m3 0h3m1 0h1m1 0h1m2 0h2m1 0h1m3 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h3m1 0h1m-45 1h3m1 0h5m6 0h2m1 0h8m1 0h1m1 0h1m1 0h1m1 0h2m1 0h6m-42 1h1m2 0h1m3 0h2m1 0h3m1 0h2m1 0h3m2 0h4m4 0h3m2 0h1m2 0h2m2 0h1m1 0h1m-43 1h9m1 0h1m7 0h1m4 0h5m3 0h2m4 0h1m1 0h3m-43 1h2m1 0h1m2 0h2m2 0h5m7 0h2m2 0h6m1 0h5m3 0h2m-44 1h1m1 0h1m2 0h4m1 0h3m1 0h2m10 0h1m7 0h1m1 0h1m1 0h1m1 0h2m1 0h1m-43 1h1m2 0h1m4 0h1m3 0h1m1 0h4m1 0h6m1 0h2m1 0h1m4 0h1m2 0h1m3 0h3m-44 1h1m2 0h1m1 0h1m3 0h2m1 0h2m4 0h1m3 0h1m2 0h2m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2m-43 1h1m2 0h1m3 0h1m2 0h2m3 0h1m1 0h4m3 0h1m3 0h2m2 0h1m2 0h2m1 0h2m2 0h3m-45 1h2m2 0h1m1 0h4m4 0h1m2 0h1m1 0h1m6 0h2m1 0h1m4 0h1m2 0h1m1 0h3m1 0h1m-43 1h1m1 0h3m1 0h2m1 0h1m1 0h1m5 0h7m4 0h3m3 0h2m1 0h1m2 0h4m-41 1h1m1 0h1m1 0h6m3 0h1m3 0h1m1 0h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m2 0h3m-41 1h4m4 0h3m1 0h1m1 0h1m1 0h3m1 0h1m2 0h2m2 0h1m1 0h3m2 0h5m2 0h2m-44 1h1m2 0h2m1 0h4m1 0h3m1 0h4m1 0h5m1 0h1m2 0h1m3 0h2m1 0h6m-34 1h2m2 0h2m2 0h3m1 0h1m3 0h2m1 0h2m1 0h1m1 0h2m1 0h2m3 0h5m-45 1h7m2 0h1m5 0h1m2 0h3m1 0h1m1 0h1m1 0h1m4 0h1m2 0h3m1 0h1m1 0h1m1 0h1m-43 1h1m5 0h1m1 0h1m3 0h1m3 0h1m2 0h2m3 0h1m3 0h1m1 0h3m1 0h3m3 0h3m1 0h1m-45 1h1m1 0h3m1 0h1m1 0h10m2 0h5m1 0h1m8 0h7m1 0h2m-45 1h1m1 0h3m1 0h1m1 0h2m3 0h2m3 0h2m1 0h1m3 0h1m1 0h1m1 0h2m1 0h1m2 0h1m2 0h7m-45 1h1m1 0h3m1 0h1m1 0h2m4 0h2m2 0h2m1 0h1m1 0h6m2 0h1m1 0h2m1 0h2m4 0h2m-44 1h1m5 0h1m4 0h2m2 0h1m1 0h1m1 0h2m1 0h2m1 0h1m2 0h6m1 0h1m1 0h1m2 0h1m1 0h1m-43 1h7m1 0h1m2 0h3m1 0h1m2 0h1m4 0h3m1 0h1m1 0h3m1 0h4m1 0h1m2 0h1m1 0h1"/></svg><figcaption>Наведи камеру айфона</figcaption></figure>
+  </div>
+</article>
+
+<article class="card">
+  <header class="card-head">
+    <span class="rank">5</span>
+    <div class="title">
+      <h2>sv2.hajhossein.observer</h2>
+      <p class="chips"><span class="ping">212 мс</span><span>стабильно 100%</span><span>серверов 5/5</span><span>Fake-TLS</span></p>
+    </div>
+  </header>
+  
+  <div class="card-body">
+    <div class="actions">
+      <a class="btn primary" href="tg://proxy?server=sv2.hajhossein.observer&amp;port=443&amp;secret=ee1603010200010001fc030386e24c3add626973636f7474692e79656b74616e65742e636f6d">Подключить</a>
+      <div class="row">
+        <button class="btn" type="button" data-copy="https://t.me/proxy?server=sv2.hajhossein.observer&amp;port=443&amp;secret=ee1603010200010001fc030386e24c3add626973636f7474692e79656b74616e65742e636f6d">Скопировать</button>
+        <a class="btn" href="https://t.me/proxy?server=sv2.hajhossein.observer&amp;port=443&amp;secret=ee1603010200010001fc030386e24c3add626973636f7474692e79656b74616e65742e636f6d" target="_blank" rel="noopener">Через t.me</a>
+      </div>
+      <details><summary>Ввести вручную</summary>
+        <dl><dt>Сервер</dt><dd><code>sv2.hajhossein.observer</code></dd><dt>Порт</dt><dd><code>443</code></dd>
+        <dt>Секрет</dt><dd><code>ee1603010200010001fc030386e24c3add626973636f7474692e79656b74616e65742e636f6d</code></dd></dl>
+      </details>
+    </div>
+    <figure class="qr"><svg viewBox="0 0 57 57" class="segno"><path fill="#fff" d="M0 0h57v57h-57z"/><path class="qrline" stroke="#000" d="M4 4.5h7m2 0h2m2 0h3m1 0h1m1 0h2m2 0h2m2 0h1m2 0h2m1 0h1m1 0h3m2 0h1m1 0h7m-49 1h1m5 0h1m3 0h1m1 0h1m2 0h4m2 0h2m1 0h1m4 0h1m1 0h1m2 0h3m1 0h3m1 0h1m5 0h1m-49 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m2 0h1m4 0h2m2 0h1m1 0h1m1 0h1m1 0h2m3 0h2m1 0h1m1 0h3m1 0h1m-49 1h1m1 0h3m1 0h1m1 0h5m2 0h1m5 0h3m2 0h2m3 0h1m2 0h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1m-49 1h1m1 0h3m1 0h1m1 0h3m1 0h3m1 0h2m1 0h14m3 0h2m4 0h1m1 0h3m1 0h1m-49 1h1m5 0h1m1 0h3m2 0h1m4 0h1m1 0h3m3 0h1m2 0h1m4 0h1m3 0h1m3 0h1m5 0h1m-49 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-41 1h1m1 0h2m3 0h1m1 0h4m1 0h1m3 0h1m1 0h1m1 0h3m2 0h1m1 0h1m2 0h1m-41 1h1m1 0h5m2 0h1m1 0h2m2 0h2m1 0h3m1 0h6m1 0h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h5m-47 1h2m2 0h1m3 0h1m1 0h6m5 0h1m5 0h1m1 0h2m1 0h2m3 0h1m1 0h1m2 0h2m1 0h1m-46 1h1m2 0h1m1 0h5m1 0h1m1 0h1m2 0h5m1 0h2m1 0h2m4 0h1m2 0h1m1 0h6m2 0h2m1 0h2m-48 1h1m2 0h1m3 0h1m2 0h2m2 0h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m1 0h3m6 0h1m3 0h3m1 0h2m-49 1h1m2 0h6m1 0h1m1 0h2m2 0h4m2 0h1m1 0h2m3 0h3m1 0h8m5 0h1m-43 1h1m2 0h1m1 0h1m2 0h2m2 0h1m1 0h1m2 0h1m3 0h1m2 0h4m10 0h1m2 0h3m-48 1h2m1 0h5m2 0h2m5 0h3m3 0h2m1 0h2m3 0h1m1 0h2m1 0h5m6 0h2m-49 1h1m1 0h4m2 0h1m2 0h1m2 0h2m5 0h1m1 0h1m2 0h5m1 0h1m4 0h1m4 0h4m2 0h1m-49 1h2m1 0h2m1 0h2m1 0h1m2 0h6m1 0h2m3 0h2m5 0h1m1 0h9m1 0h1m2 0h1m-42 1h1m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m2 0h4m2 0h2m1 0h1m1 0h2m7 0h2m1 0h1m2 0h1m-48 1h7m2 0h6m1 0h1m4 0h2m1 0h3m2 0h1m4 0h7m4 0h1m2 0h1m-49 1h4m3 0h1m2 0h5m1 0h1m1 0h2m8 0h8m1 0h2m3 0h3m-45 1h1m1 0h3m1 0h3m2 0h4m1 0h9m2 0h1m5 0h1m2 0h2m1 0h2m1 0h1m3 0h3m-47 1h4m1 0h4m1 0h4m2 0h1m2 0h1m2 0h1m2 0h6m2 0h1m1 0h1m1 0h1m2 0h3m1 0h2m-47 1h1m2 0h5m3 0h3m1 0h1m2 0h1m1 0h7m6 0h1m1 0h1m1 0h9m1 0h1m-46 1h2m3 0h1m2 0h1m1 0h1m3 0h2m2 0h2m3 0h1m1 0h3m1 0h1m1 0h2m3 0h2m3 0h2m-46 1h2m1 0h2m1 0h1m1 0h2m2 0h3m2 0h1m1 0h4m1 0h1m1 0h1m2 0h2m4 0h2m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-49 1h1m1 0h3m3 0h4m4 0h1m2 0h1m1 0h2m3 0h1m2 0h5m1 0h1m3 0h2m3 0h2m-46 1h1m2 0h8m1 0h1m1 0h1m2 0h4m1 0h5m7 0h2m2 0h8m1 0h2m-48 1h2m4 0h1m5 0h4m1 0h1m2 0h2m5 0h3m1 0h1m2 0h1m4 0h2m3 0h1m1 0h2m-48 1h2m1 0h5m1 0h4m1 0h1m2 0h1m3 0h3m5 0h2m3 0h2m2 0h1m1 0h4m1 0h3m-48 1h1m2 0h1m3 0h6m1 0h2m2 0h3m2 0h1m1 0h1m2 0h5m2 0h1m3 0h1m4 0h1m-46 1h5m1 0h1m2 0h1m1 0h1m2 0h3m1 0h1m1 0h1m1 0h3m3 0h1m5 0h1m1 0h4m2 0h7m-45 1h1m3 0h1m1 0h1m6 0h4m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m2 0h2m1 0h1m-44 1h1m1 0h1m1 0h1m1 0h4m5 0h1m2 0h3m1 0h2m1 0h1m1 0h1m1 0h1m6 0h1m2 0h3m1 0h5m-48 1h2m7 0h1m1 0h1m1 0h6m5 0h2m1 0h2m1 0h1m2 0h1m1 0h2m2 0h1m1 0h1m5 0h1m-48 1h8m2 0h1m2 0h5m1 0h5m1 0h1m3 0h1m1 0h1m2 0h1m1 0h5m1 0h2m1 0h1m2 0h1m-49 1h3m1 0h2m2 0h2m2 0h4m1 0h3m4 0h1m1 0h1m1 0h3m1 0h4m1 0h1m2 0h1m7 0h1m-48 1h2m1 0h1m1 0h2m1 0h3m2 0h8m1 0h1m1 0h1m1 0h1m1 0h3m4 0h2m1 0h1m1 0h2m1 0h1m1 0h3m-49 1h1m1 0h2m1 0h1m4 0h4m1 0h2m1 0h1m2 0h1m2 0h7m2 0h1m2 0h1m4 0h3m2 0h2m-47 1h1m3 0h2m1 0h4m2 0h1m1 0h1m1 0h1m3 0h3m4 0h1m1 0h1m2 0h1m1 0h1m1 0h9m1 0h1m-48 1h3m7 0h3m1 0h2m1 0h1m2 0h1m1 0h6m1 0h3m4 0h1m2 0h2m1 0h2m3 0h1m-49 1h3m3 0h1m1 0h5m1 0h1m1 0h2m1 0h8m2 0h1m3 0h1m1 0h2m1 0h9m1 0h1m-41 1h1m3 0h2m1 0h1m2 0h2m2 0h1m3 0h5m2 0h1m2 0h2m2 0h1m3 0h2m-46 1h7m3 0h3m2 0h2m2 0h2m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h2m-49 1h1m5 0h1m1 0h1m3 0h1m1 0h4m1 0h4m3 0h1m1 0h6m1 0h1m4 0h1m3 0h2m1 0h1m-48 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m3 0h3m1 0h7m2 0h2m1 0h6m1 0h5m1 0h1m1 0h1m-49 1h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h1m1 0h1m4 0h1m2 0h4m1 0h4m1 0h1m4 0h1m1 0h3m3 0h1m-49 1h1m1 0h3m1 0h1m1 0h7m2 0h3m3 0h2m1 0h2m1 0h1m1 0h2m1 0h2m1 0h3m2 0h2m-44 1h1m5 0h1m4 0h3m1 0h4m2 0h2m2 0h8m2 0h1m1 0h1m4 0h1m2 0h1m2 0h1m-49 1h7m1 0h1m1 0h2m1 0h1m1 0h1m3 0h3m1 0h1m10 0h1m1 0h1m1 0h1m2 0h1m4 0h3"/></svg><figcaption>Наведи камеру айфона</figcaption></figure>
+  </div>
+</article>
+
+  <section class="howto">
+    <h2>Как подключить на айфоне</h2>
+    <ol class="steps">
+      <li>Брат, выбирай первый сервер, жми <b>«Подключить»</b> и возвращайся в телегу. Если тупит — попробуй следующий.</li>
+      <li>Если страница открыта на компе — наведи камеру айфона на QR-код и тапни по ссылке.</li>
+      <li>В телеге вылезет окно «Прокси-сервер» — жми <b>«Подключить прокси»</b>. Всё.</li>
+      <li>Проверь: скинь себе в «Избранное» фотку и голосовое. Ушло — значит, работает.</li>
+      <li>Закинь сразу два-три сервера. Отвалится один — переключишься в пару тапов: <b>Настройки → Данные и память → Прокси</b>.</li>
+      <li>Кнопка не открыла телегу? Там же, в «Прокси», жми «Добавить прокси» и вбей руками сервер, порт и секрет из «Ввести вручную».</li>
+    </ol>
+    <p class="small">Админ прокси видит только твой IP, переписку — нет, её шифрует сама телега. Звонки через прокси не идут — только сообщения, фото, видео и голосовые. Код из SMS и пароль никому не давай — для прокси они не нужны.</p>
+  </section>
+
+  <footer>
+    <p class="quote">4 стены — не повод терять связь. Своих не теряем.</p>
+    <p class="sign">— Шах</p>
+  </footer>
+</main>
+<script>
+document.addEventListener("click", function (e) {
+  var b = e.target.closest("[data-copy]");
+  if (!b) return;
+  var text = b.getAttribute("data-copy");
+  var done = function () {
+    if (b.dataset.busy) return;
+    b.dataset.busy = "1";
+    var t = b.textContent; b.textContent = "Скопировано ✓"; b.classList.add("done");
+    setTimeout(function () { b.textContent = t; b.classList.remove("done"); delete b.dataset.busy; }, 1500);
+  };
+  var legacy = function () {
+    // Works on file:// pages and older browsers where navigator.clipboard is unavailable.
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    if (ok) done(); else window.prompt("Скопируй ссылку:", text);
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done, legacy);
+  } else {
+    legacy();
+  }
+});
+</script>
+</body>
+</html>
